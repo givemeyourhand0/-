@@ -29,10 +29,14 @@
 
 ​    └ Deque(接口)
 
+Queue接口与List、Set同一级别，都是继承了Collection接口。LinkedList实现了Queue接口。**Queue接口窄化了对LinkedList的方法的访问权限**（即在方法中的参数类型如果是Queue时，就完全只能访问Queue接口所定义的方法 了，而不能直接访问 LinkedList的非Queue的方法），以使得只有恰当的方法才可以使用。
+
+双向队列(Deque),是Queue的一个子接口。一般这样用：Deque<String> deque = new LinkedList<String>();
+
 **+Map(接口)**
  ├ +Map(接口 映射集合)
- │ ├ HashMap            (Class 不同步，线程不安全。除了不同和允许使用null 键值之外，与Hashtable大致相同)
- │ ├ Hashtable           (Class 同步   ，线程安全    。不允许实施null 键值)
+ │ ├ HashMap            (Class 不同步，线程不安全。除了允许使用null 键值之外，与Hashtable大致相同)
+ │ ├ Hashtable           (Class 同步   ，线程安全    。不允许使用null 键值)
  │ ├ +SortedMap 接口
  │ │   ├ TreeMap         (Class)
  │ ├ WeakHashMap     (Class)
@@ -56,11 +60,11 @@
 
 #### 二、Map接口：映射
 
-![map](C:\Users\72703\Desktop\map.jpg)
+![map](E:\笔记\笔试面试记录\图片\map.jpg)
 
 ##### 1.1   Map概括
 
-- Map没有继承Collection接口， Map 提供 key 到 value 的映射，你可以通过“键”查找“值”。一个 Map 中不能包含相同的 key ，每个 key 只能映射一个 value 。 Map 接口提供3种集合的视图， Map 的内容可以被当作一组 key 集合，一组 value 集合，或者一组 key-value 映射。
+- Map没有继承Collection接口， Map 提供 key 到 value 的映射，你可以通过“键”查找“值”。一个 Map 中不能包含相同的 key ，每个 key 只能映射一个 value 。 Map 接口提供3种集合的视图，即Map 的内容可以被当作一组 key 集合，一组 value 集合，或者一组 key-value 映射。
 - 方法 put(Object key, Object value) 添加一个“值” ( 想要得东西 ) 和与“值”相关联的“键” (key) ( 使用它来查找 ) 。方法get(Objectkey) 返回与给定“键”相关联的“值”。可以用 containsKey() 和 containsValue() 测试 Map 中是否包含某个“键”或“值”。 标准的 Java 类库中包含了几种不同的 Map ： HashMap, TreeMap,LinkedHashMap, WeakHashMap, IdentityHashMap 。它们都有同样的基本接口 Map ，但是行为、效率、排序策略、保存对象的生命周期和判定“键”等价的策略等各不相同。
 - Map 同样对每个元素保存一份，但这是基于 " 键"的， Map 也有内置的排序，因而不关心元素添加的顺序。如果添加元素的顺序对你很重要，应该使用 LinkedHashSet 或者 LinkedHashMap.
 - 执行效率是 Map 的一个大问题。看看 get() 要做哪些事，就会明白为什么在 ArrayList 中搜索“键”是相当慢的。而这正是 HashMap 提高速度的地方。 HashMap 使用了特殊的值，称为“散列码” (hash code) ，来取代对键的缓慢搜索。“散列码”是“相对唯一”用以代表对象的int值，它是通过将该对象的某些信息进行转换而生成的（在下面总结二：需要的注意的地方有更进一步探讨）。所有 Java 对象都能产生散列码，因为 hashCode() 是定义在基类 Object 中的方法 。 HashMap 就是使用对象的 hashCode() 进行快速查询的。此方法能够显著提高性能。
@@ -99,8 +103,8 @@
 ##### 1.8 Hashtable和HashMap比较
 
 -  Hashtable和HashMap都实现了Map接口，但是Hashtable的实现是基于Dictionary抽象类。
-- HashTable 是线程安全的，不能存储 null 值
-- HashMap 不是线程安全的，可以存储 null 值
+-  HashTable 是线程安全的，不能存储 null 值
+-  HashMap 不是线程安全的，可以存储 null 值
 
 #### 三、Collections类和Collection接口
 
@@ -124,6 +128,8 @@ List : 次序是List最重要的特点：它保证维护元素特定的顺序。
 4) 和LinkedList一样，ArrayList也是非同步的（unsynchronized）。
 
 5) 由数组实现的List。允许对元素进行快速随机访问，但是向List中间插入与移除元素的速度很慢。ListIterator只应该用来由后向前遍历ArrayList,而不是用来插入和移除元素。因为那比LinkedList开销要大很多。
+
+6) ArrayList类如何动态扩容？JDK1.6中是使用无参构造函数时，初始容量是10，满了之后需要添加下一个元素时才会扩容成1.5倍。
 
 #####4.2 Vector类
 
